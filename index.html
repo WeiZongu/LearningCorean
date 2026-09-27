@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>漢字で韓国語</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>漢字で韓国語 <span class="sub">한자로 배우는 한국어</span></h1>
+      <p class="lead">韓国語の発音を聞いて、漢字の字幕をヒントに日本語で答えよう。</p>
+    </header>
+
+    <!-- 設定画面 -->
+    <section id="setup" class="card">
+      <label>レベル
+        <select id="level">
+          <option value="1">初級</option>
+          <option value="2">中級</option>
+          <option value="all">すべて</option>
+        </select>
+      </label>
+      <label>字幕
+        <select id="subtitle">
+          <option value="hanja">漢字のみ</option>
+          <option value="both">漢字＋ハングル</option>
+          <option value="none">なし（音声のみ）</option>
+        </select>
+      </label>
+      <label>回答方法
+        <select id="answerMode">
+          <option value="input">入力（漢字・ひらがな・カタカナ可）</option>
+          <option value="choice">4択</option>
+        </select>
+      </label>
+      <label>読み上げ速度 <span id="rateLabel">0.9x</span>
+        <input id="rate" type="range" min="0.5" max="1.5" step="0.1" value="0.9">
+      </label>
+      <label class="check"><input id="weakOnly" type="checkbox"> 苦手な単語だけ出題</label>
+      <button id="start" class="primary">スタート（10問）</button>
+      <p id="voiceWarning" class="warning" hidden>
+        韓国語の音声が見つかりません。端末の設定で韓国語の読み上げ音声を追加すると、正しい発音で再生されます。
+      </p>
+      <div class="stats-row">
+        <span id="stats"></span>
+        <button id="resetStats" class="link">記録をリセット</button>
+      </div>
+    </section>
+
+    <!-- 出題画面 -->
+    <section id="quiz" class="card" hidden>
+      <div class="quiz-head">
+        <span id="progress"></span>
+        <span id="score"></span>
+        <button id="quit" class="link">やめる</button>
+      </div>
+      <div class="player">
+        <button id="play" class="round" title="もう一度聞く（Space）">🔊</button>
+        <button id="playSlow" class="round small" title="ゆっくり聞く">🐢</button>
+      </div>
+      <div id="caption" class="caption" aria-live="polite"></div>
+      <button id="hint" class="link" hidden>ヒント：漢字を見る</button>
+
+      <form id="answerForm" autocomplete="off">
+        <input id="answerInput" type="text" placeholder="日本語で答える（例：がっこう / 学校）" lang="ja">
+        <button type="submit" class="primary">答える</button>
+      </form>
+      <div id="choices" class="choices" hidden></div>
+      <button id="skip" class="link">わからない</button>
+
+      <div id="feedback" class="feedback" hidden></div>
+      <button id="next" class="primary" hidden>次へ ▶</button>
+    </section>
+
+    <!-- 結果画面 -->
+    <section id="result" class="card" hidden>
+      <h2>結果</h2>
+      <p id="resultSummary" class="summary"></p>
+      <ul id="resultList" class="result-list"></ul>
+      <div class="actions">
+        <button id="retryWrong" class="primary">間違えた単語をもう一度</button>
+        <button id="backToSetup">最初に戻る</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/words.js"></script>
+  <script src="js/judge.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
