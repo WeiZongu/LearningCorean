@@ -89,7 +89,11 @@
   }
 
   function startQuiz(words) {
-    if (words.length === 0) { alert("出題できる単語がありません。条件を変えてください。"); return; }
+    if (words.length === 0) {
+      els.voiceWarning.hidden = false;
+      els.voiceWarning.textContent = "出題できる単語がありません。レベルか「苦手な単語だけ」の設定を変えてください。";
+      return;
+    }
     state = {
       words: shuffle(words).slice(0, QUIZ_LENGTH),
       index: 0, correct: 0, answered: false, log: [],
@@ -253,8 +257,18 @@
   els.next.addEventListener("click", nextQuestion);
   els.backToSetup.addEventListener("click", () => { renderStats(); show("setup"); });
   $("quit").addEventListener("click", () => { speechSynthesis?.cancel?.(); renderStats(); show("setup"); });
+  // confirm() が使えない環境もあるため、2回押しで確定する
+  let resetArmed = false;
   els.resetStats.addEventListener("click", () => {
-    if (confirm("学習記録をリセットしますか？")) { stats = {}; saveStats(stats); renderStats(); }
+    if (!resetArmed) {
+      resetArmed = true;
+      els.resetStats.textContent = "もう一度押すとリセット";
+      setTimeout(() => { resetArmed = false; els.resetStats.textContent = "記録をリセット"; }, 3000);
+      return;
+    }
+    resetArmed = false;
+    els.resetStats.textContent = "記録をリセット";
+    stats = {}; saveStats(stats); renderStats();
   });
 
   // 字幕なしモードのヒント：漢字だけ表示する

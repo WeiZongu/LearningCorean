@@ -10,7 +10,7 @@
   --border: #e2ddd3;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #16181c;
     --card: #20242a;
     --text: #eceef1;
@@ -20,7 +20,20 @@
     --ok: #4cc47f;
     --ng: #ff6b6b;
     --border: #343a42;
+    color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+    --bg: #16181c;
+    --card: #20242a;
+    --text: #eceef1;
+    --muted: #9aa0a8;
+    --accent: #ff5a6e;
+    --accent-2: #7fa8ff;
+    --ok: #4cc47f;
+    --ng: #ff6b6b;
+    --border: #343a42;
+    color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body {
@@ -68,9 +81,9 @@ button {
   padding: 10px 16px;
 }
 button:disabled { cursor: default; opacity: 0.7; }
-button.primary { background: var(--accent-2); color: #fff; border-color: transparent; font-weight: 700; }
+button.primary { background: var(--accent-2); color: var(--card); border-color: transparent; font-weight: 700; }
 button.link { background: none; border: none; color: var(--muted); text-decoration: underline; padding: 4px; align-self: center; }
-button.round { width: 72px; height: 72px; border-radius: 50%; font-size: 2rem; background: var(--accent); color: #fff; border: none; }
+button.round { width: 72px; height: 72px; border-radius: 50%; font-size: 2rem; background: var(--accent); color: var(--card); border: none; }
 button.round.small { width: 48px; height: 48px; font-size: 1.3rem; background: var(--card); border: 1px solid var(--border); }
 button.mini { padding: 2px 6px; font-size: 0.9rem; }
 
@@ -114,3 +127,4 @@ button.mini { padding: 2px 6px; font-size: 0.9rem; }
 .result-list li.ng { border-color: var(--ng); }
 .actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .actions button { flex: 1; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
