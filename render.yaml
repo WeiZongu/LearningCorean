@@ -1,0 +1,20 @@
+# Render Blueprint: 静的サイトとしてデプロイする
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: learningcorean
+    runtime: static
+    # テストが通ったら公開用ファイルだけを dist にコピーする
+    buildCommand: node test/run.js && rm -rf dist && mkdir dist && cp -r index.html css js dist/
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Cache-Control
+        value: no-cache

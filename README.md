@@ -40,3 +40,15 @@ test/run.js     データ整合性と判定のテスト（node test/run.js）
 ```
 
 単語を追加するときは `js/words.js` に 1 行足してください。漢字とハングルは 1 字 1 音節で対応させる必要があります（テストで検査）。
+
+## Render へのデプロイ
+
+`render.yaml`（Render Blueprint）で静的サイトとしてデプロイできます。無料プランで動きます。
+
+1. [Render](https://dashboard.render.com/) に GitHub アカウントでログイン
+2. **New → Blueprint** を選び、このリポジトリ（`LearningCorean`）を接続
+3. `render.yaml` が読み込まれるので **Apply** を押す
+4. ビルド完了後、`https://learningcorean.onrender.com` のような URL で公開されます
+
+ビルド時に `node test/run.js` が実行され、テストが通ったときだけ `index.html` / `css` / `js` が公開されます。
+以降は GitHub のブランチに push するたびに自動で再デプロイされます。
